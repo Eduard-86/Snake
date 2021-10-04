@@ -1,7 +1,8 @@
 #include "Map.h"
 #include <iostream>
 
-Map::Map(unsigned int width, unsigned int height, char sn_heat, char sn_body, char mp_wall, char mp_ground, char fo_symbol)
+Map::Map(unsigned int width, unsigned int height, char sn_heat, 
+	char sn_body, char mp_wall, char mp_ground, char fo_symbol, char cra_symbol)
 {
 	srand(time(NULL));
 	
@@ -26,6 +27,10 @@ Map::Map(unsigned int width, unsigned int height, char sn_heat, char sn_body, ch
 	food_symbol = fo_symbol;
 
 	SpavnFood();
+
+	crash_synbol = cra_symbol;
+
+	game_score = 0;
 }
 
 
@@ -51,9 +56,15 @@ void Map::Tick(char move_snake)
 	{
 		snake->AddElement();
 		SpavnFood();
+		game_score++;
 	}
 	
 	FillMap();
+
+	std::cout << "Очки :" << game_score << std::endl;
+	std::cout << "Твои координаты :" << snake->GetHeatIterator()->first
+		<< '-' << snake->GetHeatIterator()->second << std::endl;
+	
 	PrintMap();
 }
 
@@ -85,50 +96,38 @@ void Map::FillMap()
 			}
 		}
 	}
+
+	map[food_location.first][food_location.second] = food_symbol;
 	
+	std::vector<std::pair<int, int>>* SnakeArr = &(*snake).GetArr();
+	std::vector<std::pair<int, int>>::iterator SnakeIterator = (*snake).GetHeatIterator();
 	
-	
-	for(int i = 0; i < (*snake).GetArr().size(); i++)
+	for(int i = 0; i < (*SnakeArr).size(); i++)
 	{
-		if((*snake).GetArr()[i] == *((*snake).GetHeatIterator()))
+		if((*SnakeArr)[i] == *(SnakeIterator))
 		{
 			map
-			[(*snake).GetArr()[i].first]
-			[(*snake).GetArr()[i].second] = snake_heat_simbol;
+			[(*SnakeArr)[i].first]
+			[(*SnakeArr)[i].second] = snake_heat_simbol;
 
 			continue;
 		}
 		
 		map
-		[(*snake).GetArr()[i].first]
-		[(*snake).GetArr()[i].second] = snake_body_simbol;
-
+		[(*SnakeArr)[i].first]
+		[(*SnakeArr)[i].second] = snake_body_simbol;
 	}
 
-	map[food_location.first][food_location.second] = food_symbol;
-
-	/*
-	 *	std::vector<std::pair<int, int>> snake_l;
-	int j = snake.GetHeatIndex();
 	
-	for(int i = 0; i < snake.GetArr().size(); i++)
+	if(SnakeIterator->first == 0 || SnakeIterator->first == (map_width-1) ||
+		SnakeIterator->second == 0 || SnakeIterator->second == (map_height-1))
 	{
-		if(j == snake.GetArr().size())
-		{
-			j = 0;
-		}
+		map[SnakeIterator->first][SnakeIterator->second] = crash_synbol;
+		FooEnd(game_score);
+	}
 
-		if(i == 0)
-		{
-			map[snake.GetArr()[j].first][snake.GetArr()[j].second] = '%';
-		}
-		else
-		{
-			map[snake.GetArr()[j].first][snake.GetArr()[j].second] = '*';
-		}
-
-		j++;
-	}*/
+	
+	
 
 }
 

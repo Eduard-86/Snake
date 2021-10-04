@@ -21,6 +21,18 @@ public:
 	void Start_Game();
 	void Tick(char muve_key);
 	
+	int Time_Game()
+	{
+		return time_tact;
+	}
+
+	void End_Game(int score);
+
+	int GetTimeTact()
+	{
+		return time_tact;
+	}
+	
 };
 
 

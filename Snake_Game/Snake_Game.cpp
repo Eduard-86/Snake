@@ -44,6 +44,8 @@ int main()
 	Game_Master game;
 	game.Start_Game();
 
+	int time = game.GetTimeTact();
+	
 	
 	char PlayerImput = 'f';
 
@@ -55,11 +57,11 @@ int main()
 		}
 		game.Tick(PlayerImput);
 
-#pragma region Degug
+#pragma region Debug
 
 #pragma endregion 
 
-		Sleep(400);
+		Sleep(time);
 		system("cls");
 	}
 	

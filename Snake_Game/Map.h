@@ -1,6 +1,7 @@
 #pragma once
 #include "Snake.h"
 #include <time.h>
+#include <functional>
 
 
 //struct Snake;
@@ -25,14 +26,19 @@ class Map
 
 	char food_symbol;
 	std::pair<int, int> food_location;
-	
+
+	char crash_synbol;
+
+	int game_score;
+
+	std::function<void(int)> FooEnd;
 
 	//Snake* snake;
 	
 public:
 	
 	Map( unsigned int width, unsigned int height, char sn_heat = '#', char sn_body = '*', 
-		char mp_wall = '0', char mp_ground = '.', char fo_symbol = '$' );
+		char mp_wall = '0', char mp_ground = '.', char fo_symbol = '$', char cra_symbol = '@');
 
 	void PrintMap();
 
@@ -43,4 +49,9 @@ public:
 	//void FillMap(const std::pair<int, int>& snakelocation)
 	void FillMap();
 	//Snake& snake
+
+	void SetFooEnd(std::function<void(int)> Foo)
+	{
+		FooEnd = Foo;
+	}
 };
