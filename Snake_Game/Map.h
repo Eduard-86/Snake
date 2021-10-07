@@ -30,6 +30,7 @@ class Map
 	char crash_synbol;
 
 	int game_score;
+	int key_from_body_collision;
 
 	std::function<void(int)> FooEnd;
 

@@ -31,6 +31,7 @@ Map::Map(unsigned int width, unsigned int height, char sn_heat,
 	crash_synbol = cra_symbol;
 
 	game_score = 0;
+	key_from_body_collision = game_score;
 }
 
 
@@ -70,8 +71,8 @@ void Map::Tick(char move_snake)
 
 void Map::SpavnFood()
 {
-	food_location.first = (rand() % map_width);
-	food_location.second = (rand() % map_height);
+	food_location.first = 1 + rand() % (map_width - 2);
+	food_location.second = 1 + rand() % (map_height - 2);
 }
 
 
@@ -104,31 +105,63 @@ void Map::FillMap()
 	
 	for(int i = 0; i < (*SnakeArr).size(); i++)
 	{
-		if((*SnakeArr)[i] == *(SnakeIterator))
+		if((*SnakeArr)[i] == *SnakeIterator)
+			//(*SnakeArr)[i] == *SnakeIterator
 		{
 			map
 			[(*SnakeArr)[i].first]
 			[(*SnakeArr)[i].second] = snake_heat_simbol;
-
-			continue;
+			
 		}
-		
-		map
-		[(*SnakeArr)[i].first]
-		[(*SnakeArr)[i].second] = snake_body_simbol;
+		else
+		{	
+			map
+			[(*SnakeArr)[i].first]
+			[(*SnakeArr)[i].second] = snake_body_simbol;
+		}
 	}
 
+
+#pragma region collision check
 	
 	if(SnakeIterator->first == 0 || SnakeIterator->first == (map_width-1) ||
 		SnakeIterator->second == 0 || SnakeIterator->second == (map_height-1))
 	{
 		map[SnakeIterator->first][SnakeIterator->second] = crash_synbol;
+
+		PrintMap();
+
+		std::cout << std::endl;
+		
 		FooEnd(game_score);
 	}
 
 	
-	
+	if (key_from_body_collision == game_score)
+	{
+		for (int i = 0, key = 0; i < (*SnakeArr).size(); i++)
+		{
+			if (&(*SnakeArr)[i] != &(*SnakeIterator))
+			{
+				if ((*SnakeArr)[i].first == (*SnakeIterator).first &&
+					(*SnakeArr)[i].second == (*SnakeIterator).second)
+				{
+					map[(*SnakeIterator).first][(*SnakeIterator).second] = crash_synbol;
 
+					PrintMap();
+
+					std::cout << std::endl;
+
+					FooEnd(game_score);
+				}
+
+			}
+		}
+	}
+	
+	key_from_body_collision = game_score;
+	
+#pragma endregion	
 }
 
 

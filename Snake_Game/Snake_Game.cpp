@@ -49,17 +49,13 @@ int main()
 	
 	char PlayerImput = 'f';
 
-	for(int i = 1;;i++)
+	while(true)
 	{
  		if(_kbhit())
 		{
 			PlayerImput = _getch();
 		}
 		game.Tick(PlayerImput);
-
-#pragma region Debug
-
-#pragma endregion 
 
 		Sleep(time);
 		system("cls");

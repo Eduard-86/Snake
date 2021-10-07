@@ -54,9 +54,6 @@ void Snake::SetDirection(char a)
 			break;
 		}
 	}
-
-	
-	
 	
 	head_iterator += 1;
 

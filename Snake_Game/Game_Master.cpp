@@ -22,7 +22,7 @@ void Game_Master::Start_Game()
 
 	int key = 0;
 
-	cout << "\tВыбераем сложность \n\tЛегкая (1)\n\tСредняя (2)\n\tТяжёлая (3)\n";
+	cout << "Выбераем сложность \nЛегкая (1)\nСредняя (2)\nТяжёлая (3)\n";
 
 	cin >> key;
 
@@ -30,23 +30,23 @@ void Game_Master::Start_Game()
 	{
 		case 1 :
 		{
-			time_tact = 500;
-			width = 17;
-			height = 17;
-			break;
-		}
-		case 2:
-		{
 			time_tact = 400;
 			width = 15;
 			height = 15;
 			break;
 		}
-		case 3:
+		case 2:
 		{
 			time_tact = 300;
 			width = 13;
 			height = 13;
+			break;
+		}
+		case 3:
+		{
+			time_tact = 200;
+			width = 11;
+			height = 11;
 			break;
 		}
 		default:
