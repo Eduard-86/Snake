@@ -99,8 +99,8 @@ void Game_Master::Tick(char muve_key)
 void Game_Master::End_Game(int score)
 {
 	std::cout << "Ты проиграл, много много подливы\n";
-	std::cout << "Твой счёт :" << score << std::endl;
+	std::cout << "Твой счёт :" << score << std::endl << std::endl;
 
-	//system("pause");
+	system("pause");
 	exit(0);
 }
