@@ -58,35 +58,6 @@ void Game_Master::Start_Game()
 	std::function<void(int)> FooEnd =
 		std::bind(&Game_Master::End_Game, this, std::placeholders::_1);
 
-#pragma region Delegats
-	
-	class A
-	{
-	public:
-		void print() { std::cout << "Prikol"; }
-
-		void operator()()
-		{
-			std::cout << "()()()" << std::endl;
-			return;
-		}
-	};
-
-	A a;
-
-	// Принимаем функторы без вопросов 
-	std::function<void()> kekw1 = a;
-
-	// Радной синтаксис для хранения метода класса 
-	std::function<void(Game_Master&, int)> Foo = &Game_Master::End_Game;
-
-	// Хранения метода с помащью бинд
-	// std::placeholders::_1 данный синтаксис для определения параметров 
-	std::function<void(int)> FooEnd1 =
-		std::bind(&Game_Master::End_Game, this, std::placeholders::_1);
-
-#pragma endregion
-
 	map->SetFooEnd(FooEnd);
 	
 }
@@ -98,7 +69,7 @@ void Game_Master::Tick(char muve_key)
 
 void Game_Master::End_Game(int score)
 {
-	std::cout << "Ты проиграл, много много подливы\n";
+	std::cout << "Ты проиграл\n";
 	std::cout << "Твой счёт :" << score << std::endl << std::endl;
 
 	system("pause");
